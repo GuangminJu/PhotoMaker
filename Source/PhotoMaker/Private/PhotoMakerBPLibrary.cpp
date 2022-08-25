@@ -16,11 +16,20 @@ UTexture2D* UPhotoMakerBPLibrary::CreateWidgetImage(TSharedPtr<SCustomImage>& Im
                                                     const FString& Name, const EObjectFlags& Flags,
                                                     const FCreateTexture2DParameters& InParams)
 {
+	return CreateWidgetImage(Image, SrcWidth, SrcHeight, SrcWidth, SrcHeight, SrcData, Outer, Name, Flags, InParams);
+}
+
+UTexture2D* UPhotoMakerBPLibrary::CreateWidgetImage(TSharedPtr<SCustomImage>& Image, int32 SrcWidth, int32 SrcHeight,
+                                                    int32 ImageWidth, int32 ImageHeight, const TArray<FColor>& SrcData,
+                                                    UObject* Outer, const FString& Name,
+                                                    const EObjectFlags& Flags,
+                                                    const FCreateTexture2DParameters& InParams)
+{
 	UTexture2D* Texture2D = CreateTexture2D(SrcWidth, SrcHeight, SrcData, Outer, Name, Flags, InParams);
 
 	FSlateBrush* SlateBrush = new FSlateBrush();
 	SlateBrush->SetResourceObject(Texture2D);
-	SlateBrush->SetImageSize(FVector2D(Texture2D->GetSizeX(), Texture2D->GetSizeY()));
+	SlateBrush->SetImageSize(FVector2D(ImageWidth, ImageHeight));
 
 	SAssignNew(Image, SCustomImage)
 		.Image(SlateBrush);

@@ -35,7 +35,8 @@ class PHOTOMAKER_API UPhotoMakerBPLibrary : public UBlueprintFunctionLibrary
 public:
 
 	static UTexture2D* CreateWidgetImage(TSharedPtr<SCustomImage>& Image, int32 SrcWidth, int32 SrcHeight, const TArray<FColor> &SrcData, UObject* Outer, const FString& Name, const EObjectFlags &Flags, const FCreateTexture2DParameters& InParams);
-	
+	static UTexture2D* CreateWidgetImage(TSharedPtr<SCustomImage>& Image, int32 SrcWidth, int32 SrcHeight, int32 ImageWidth, int32 ImageHeight, const TArray<FColor> &SrcData, UObject* Outer, const FString& Name, const EObjectFlags &Flags, const FCreateTexture2DParameters& InParams);
+
 	static UTexture2D* CreateTexture2D(int32 SrcWidth, int32 SrcHeight, const TArray<FColor> &SrcData, UObject* Outer, const FString& Name, const EObjectFlags &Flags, const FCreateTexture2DParameters& InParams);
 
 	static void AppendPointOnPhoto(UTexture2D* InTexture, FVector Point, FVector Edge0, FVector Edge1,

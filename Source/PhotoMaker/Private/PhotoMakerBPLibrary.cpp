@@ -98,13 +98,44 @@ void UPhotoMakerBPLibrary::AppendPointOnPhoto(UTexture2D* InTexture, TArray<FVec
 	InTexture->UpdateResource();
 }
 
+void UPhotoMakerBPLibrary::AppendPointOnPhoto(UTexture2D* InTexture, TArray<FVector_NetQuantize> Points,
+                                              FVector2D Edge0, FVector2D Edge1, FColor Color)
+{
+	if (!ensureMsgf(InTexture, TEXT("InTexture nullptr")))
+		return;
+
+	int32 Width = static_cast<uint32_t>(InTexture->GetSurfaceWidth());
+	int32 Height = static_cast<uint32_t>(InTexture->GetSurfaceHeight());
+	FColor* Mip = (FColor*)InTexture->Source.LockMip(0);
+
+	for (const FVector_NetQuantize& Point3D : Points)
+	{
+		FVector2D Point(Point3D.X, Point3D.Y);
+		if (Point.X < Edge0.X || Point.Y < Edge0.Y || Point.X > Edge1.X || Point.Y > Edge1.Y)
+			continue;
+
+		FVector2D PointPositionNormalized = (Point - Edge0) / (Edge1 - Edge0);
+
+		if (PointPositionNormalized.X > 1.0 || PointPositionNormalized.Y > 1.0)
+			continue;
+
+		FVector2D PointPosition = FVector2D(Width, Height) * PointPositionNormalized;
+		PointPosition = PointPosition.RoundToVector();
+		Mip[(int32)PointPosition.Y * InTexture->GetSizeX() + (int32)PointPosition.X] = Color;
+	}
+
+	InTexture->Source.UnlockMip(0);
+
+	InTexture->UpdateResource();
+}
+
 void UPhotoMakerBPLibrary::SetPhotoOneColor(UTexture2D* InTexture, FColor Color)
 {
 	int32 Width = static_cast<uint32_t>(InTexture->GetSurfaceWidth());
 	int32 Height = static_cast<uint32_t>(InTexture->GetSurfaceHeight());
-	
+
 	FColor* Mip = (FColor*)InTexture->Source.LockMip(0);
-	
+
 	for (int32 y = 0; y < Height; y++)
 	{
 		for (int32 x = 0; x < Width; x++)

@@ -48,6 +48,10 @@ public:
 	static void AppendPointOnPhoto(UTexture2D* InTexture, TArray<FVector2D> Points, FVector2D Edge0, FVector2D Edge1,
 									   FColor Color = FColor::White);
 
+	// use this whenever possible
+	static void AppendPointOnPhoto(UTexture2D* InTexture, TArray<FVector_NetQuantize> Points, FVector2D Edge0, FVector2D Edge1,
+									   FColor Color = FColor::White);
+
 	static void SetPhotoOneColor(UTexture2D* InTexture, FColor Color = FColor::White);
 	
 	static TSharedPtr<SStandaloneWindow> CreateStandaloneWindow();

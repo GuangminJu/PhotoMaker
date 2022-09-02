@@ -16,7 +16,8 @@ class PHOTOMAKER_API UWindowSaveConfig : public UObject
 	
 public:
 	UWindowSaveConfig()
-		:ScreenPosition(FVector2D(0.,0.))
+		:ClientSize(500.,500.)
+		,ScreenPosition(FVector2D(0.,0.))
 	{
 		
 	}

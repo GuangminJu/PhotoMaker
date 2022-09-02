@@ -10,8 +10,8 @@
  * 
  */
 
-DECLARE_DELEGATE_OneParam(FOnMouseEnterAndMove,const FVector2D& MoveDelta)
-DECLARE_DELEGATE_OneParam(FOnMouseWheel,const float Delta)
+DECLARE_DELEGATE_OneParam(FOnMouseEnterAndMove,const FVector2D&)
+DECLARE_DELEGATE_OneParam(FOnMouseWheel,const float)
 
 class PHOTOMAKER_API SCustomImage : public SImage
 {
